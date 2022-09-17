@@ -56,5 +56,24 @@ namespace FluentValidation.Extensions.Tests
                 Assert.AreEqual(2, ex.Errors.Count());
             }
         }
+
+        [TestMethod]
+        public async Task MultiValidator_WithOptionalNullObjectToValidate_Succeeds()
+        {
+            await _target.WithOptional<ExampleModelValidator, ExampleModel>(null)
+                         .ValidateAsync();
+
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        public async Task ValidationBuilder_WithOptionalNullObjectToValidate_Succeeds()
+        {
+            await _target.With<ExampleModelValidator, ExampleModel>(_exampleModel)
+                         .WithOptional<ExampleModelValidator, ExampleModel>(null)
+                         .ValidateAsync();
+
+            Assert.IsTrue(true);
+        }
     }
 }

@@ -13,5 +13,15 @@ namespace FluentValidation.Extensions
 
             return new ValidationBuilder(validations);
         }
+
+        public ValidationBuilder WithOptional<TValidator, TObj>(TObj? toValidate)
+            where TValidator : IValidator<TObj>, new()
+            where TObj : class
+        {
+            if (toValidate == null)
+                return new ValidationBuilder(new List<Context>());
+            else
+                return With<TValidator, TObj>(toValidate);
+        }
     }
 }

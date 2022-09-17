@@ -24,6 +24,16 @@ namespace FluentValidation.Extensions
             return this;
         }
 
+        public ValidationBuilder WithOptional<TValidator, TObj>(TObj? toValidate)
+            where TValidator : IValidator<TObj>, new()
+            where TObj : class
+        {
+            if (toValidate == null)
+                return this;
+
+            return With<TValidator, TObj>(toValidate);
+        }
+
         public async Task ValidateAsync()
         {
             var errors = await GetValidationErrorsAsync();
