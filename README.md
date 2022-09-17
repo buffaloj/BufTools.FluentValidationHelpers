@@ -1,2 +1,2 @@
 # MultiValidator
-Simplifies validating multiple properties with multiple validators
+Simplifies validating multiple properties with multiple FluentValidators
