@@ -1,37 +1,17 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
-using System;
-using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
 
-namespace MultiValidator
+namespace FluentValidation.Extensions
 {
     public class MultiValidator
     {
-        private object? _toValidate;
-        private IValidator? _validator; 
-
-        public MultiValidator With<TValidator>(object toValidate)
-            where TValidator : IValidator, new()
+        public ValidationBuilder With<TValidator, TObj>(TObj toValidate)
+            where TValidator : IValidator<TObj>, new()
         {
-            _toValidate = toValidate ?? throw new ArgumentNullException(nameof(toValidate));
-            _validator = new TValidator();
+            var validator = new TValidator();
+            var validations = new List<Context> { new Context(validator, new ValidationContext<TObj>(toValidate)) };
 
-            return this;
-        }
-
-        public async Task ValidateAsync()
-        {
-            var result = await GetValidationResultAsync();
-            if (!result.IsValid)
-                throw new ValidationException(result.Errors);
-        }
-
-        public async Task<ValidationResult> GetValidationResultAsync()
-        {
-            if (_validator == null || _toValidate == null)
-                return new ValidationResult();
-
-            return await _validator.ValidateAsync(new ValidationContext<object>(_toValidate));
+            return new ValidationBuilder(validations);
         }
     }
 }

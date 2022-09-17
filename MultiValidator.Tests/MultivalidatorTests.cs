@@ -1,9 +1,8 @@
-﻿using FluentValidation;
-using FluentValidation.Extensions.Tests.Models;
+﻿using FluentValidation.Extensions.Tests.Models;
 using FluentValidation.Extensions.Tests.Validators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace MultiValidator.Tests
+namespace FluentValidation.Extensions.Tests
 {
     [TestClass]
     public class MultivalidatorTests
@@ -18,9 +17,9 @@ namespace MultiValidator.Tests
         }
 
         [TestMethod]
-        public async Task MultiValidator_WithPassingValidator_Succeeds()
+        public async Task ValidateAsync_WithPassingValidator_Succeeds()
         {
-            await _target.With<ExampleModelValidator>(_exampleModel)
+            await _target.With<ExampleModelValidator, ExampleModel>(_exampleModel)
                          .ValidateAsync();
 
             Assert.IsTrue(true);
@@ -28,12 +27,34 @@ namespace MultiValidator.Tests
 
         [TestMethod]
         [ExpectedException(typeof(ValidationException))]
-        public async Task MultiValidator_WithFailingValidator_Throws()
+        public async Task ValidateAsync_WithFailingValidator_Throws()
         {
             _exampleModel.ExampleString = null;
 
-            await _target.With<ExampleModelValidator>(_exampleModel)
+            await _target.With<ExampleModelValidator, ExampleModel>(_exampleModel)
                          .ValidateAsync();
+        }
+
+        [TestMethod]
+        public async Task ValidateAsync_WithMultipleFailingValidators_ConcatenatesErrors()
+        {
+            var model2 = ExampleModel.Example();
+
+            _exampleModel.ExampleString = null;
+            model2.ExampleString = null;
+
+            try
+            {
+                await _target.With<ExampleModelValidator, ExampleModel>(_exampleModel)
+                             .With<ExampleModelValidator, ExampleModel>(model2)
+                             .ValidateAsync();
+
+                Assert.IsTrue(false);
+            }
+            catch (ValidationException ex)
+            {
+                Assert.AreEqual(2, ex.Errors.Count());
+            }
         }
     }
 }
