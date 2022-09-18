@@ -7,20 +7,20 @@ namespace FluentValidation.Extensions.Tests
     [TestClass]
     public class MultivalidatorTests
     {
-        private readonly MultiValidator _target;
+        private readonly MultiValidator _validator;
 
         private readonly ExampleModel _exampleModel = ExampleModel.Example();
 
         public MultivalidatorTests()
         {
-            _target = new MultiValidator();
+            _validator = new MultiValidator();
         }
 
         [TestMethod]
         public async Task ValidateAsync_WithPassingValidator_Succeeds()
         {
-            await _target.With<ExampleModelValidator, ExampleModel>(_exampleModel)
-                         .ValidateAsync();
+            await _validator.Check(_exampleModel).Using<ExampleModelValidator>()
+                            .ValidateAsync();
 
             Assert.IsTrue(true);
         }
@@ -31,10 +31,10 @@ namespace FluentValidation.Extensions.Tests
         {
             _exampleModel.ExampleString = null;
 
-            await _target.With<ExampleModelValidator, ExampleModel>(_exampleModel)
-                         .ValidateAsync();
+            await _validator.Check(_exampleModel).Using<ExampleModelValidator>()
+                            .ValidateAsync();
         }
-
+        
         [TestMethod]
         public async Task ValidateAsync_WithMultipleFailingValidators_ConcatenatesErrors()
         {
@@ -45,9 +45,9 @@ namespace FluentValidation.Extensions.Tests
 
             try
             {
-                await _target.With<ExampleModelValidator, ExampleModel>(_exampleModel)
-                             .With<ExampleModelValidator, ExampleModel>(model2)
-                             .ValidateAsync();
+                await _validator.Check(_exampleModel).Using<ExampleModelValidator>()
+                                .Check(model2).Using<ExampleModelValidator>()
+                                .ValidateAsync();
 
                 Assert.IsTrue(false);
             }
@@ -60,8 +60,9 @@ namespace FluentValidation.Extensions.Tests
         [TestMethod]
         public async Task MultiValidator_WithOptionalNullObjectToValidate_Succeeds()
         {
-            await _target.WithOptional<ExampleModelValidator, ExampleModel>(null)
-                         .ValidateAsync();
+            ExampleModel? nullModel = default(ExampleModel);
+            await _validator.CheckOptional(nullModel).Using<ExampleModelValidator>()
+                            .ValidateAsync();
 
             Assert.IsTrue(true);
         }
@@ -69,9 +70,10 @@ namespace FluentValidation.Extensions.Tests
         [TestMethod]
         public async Task ValidationBuilder_WithOptionalNullObjectToValidate_Succeeds()
         {
-            await _target.With<ExampleModelValidator, ExampleModel>(_exampleModel)
-                         .WithOptional<ExampleModelValidator, ExampleModel>(null)
-                         .ValidateAsync();
+            ExampleModel? nullModel = default(ExampleModel);
+            await _validator.Check(_exampleModel).Using<ExampleModelValidator>()
+                            .CheckOptional(nullModel).Using<ExampleModelValidator>()
+                            .ValidateAsync();
 
             Assert.IsTrue(true);
         }

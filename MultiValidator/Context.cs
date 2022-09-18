@@ -1,16 +1,15 @@
-﻿using System;
-
-namespace FluentValidation.Extensions
+﻿namespace FluentValidation.Extensions
 {
     internal class Context
     {
-        internal Context(IValidator validator, IValidationContext? context)
+        internal Context(IValidationContext? validationContext, bool isOptional)
         {
-            Validator = validator ?? throw new ArgumentNullException(nameof(validator));
-            ValidationContext = context;
+            ValidationContext = validationContext;
+            IsOptional = isOptional;
         }
 
-        public IValidator Validator { get; set; }
+        public IValidator? Validator { get; set; }
         public IValidationContext? ValidationContext { get; set; }
+        public bool IsOptional { get; set; }
     }
 }

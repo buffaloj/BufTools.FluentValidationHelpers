@@ -8,30 +8,27 @@ namespace FluentValidation.Extensions
 {
     public class ValidationBuilder
     {
-        private readonly IList<Context> _validations;
+        private readonly IList<Context> _validations = new List<Context>();
 
-        internal ValidationBuilder(IList<Context> validations)
+        internal ValidationBuilder(Context context)
         {
-            _validations = validations ?? throw new ArgumentNullException(nameof(validations));
+            _validations.Add(context);
         }
 
-        public ValidationBuilder With<TValidator, TObj>(TObj toValidate)
-            where TValidator : IValidator<TObj>, new()
-        {
-            var validator = new TValidator();
-            _validations.Add(new Context(validator, new ValidationContext<TObj>(toValidate)));
-
-            return this;
-        }
-
-        public ValidationBuilder WithOptional<TValidator, TObj>(TObj? toValidate)
-            where TValidator : IValidator<TObj>, new()
+        public ContextBuilder<TObj> Check<TObj>(TObj toValidate)
             where TObj : class
         {
-            if (toValidate == null)
-                return this;
+            var context = new Context(new ValidationContext<TObj>(toValidate), false);
+            _validations.Add(context);
+            return new ContextBuilder<TObj>(context, this);
+        }
 
-            return With<TValidator, TObj>(toValidate);
+        public ContextBuilder<TObj> CheckOptional<TObj>(TObj? toValidate)
+           where TObj : class
+        {
+            var context = new Context((toValidate != null) ? new ValidationContext<TObj>(toValidate) : null, true);
+            _validations.Add(context);
+            return new ContextBuilder<TObj>(context, this);
         }
 
         public async Task ValidateAsync()
@@ -43,7 +40,11 @@ namespace FluentValidation.Extensions
 
         public async Task<IEnumerable<ValidationFailure>> GetValidationErrorsAsync()
         {
-            var tasks = _validations.Select(v => v.Validator.ValidateAsync(v.ValidationContext));
+            if (_validations.Any(v => v.Validator == null))
+                throw new ArgumentNullException(nameof(Context.Validator));
+
+            var tasks = _validations.Where(v => !v.IsOptional || (v.IsOptional && v.ValidationContext != null))
+                                    .Select(v => v.Validator?.ValidateAsync(v.ValidationContext));
             var results = await Task.WhenAll(tasks);
 
             return results.Errors();
