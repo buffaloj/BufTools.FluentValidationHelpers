@@ -4,14 +4,21 @@ using System;
 
 namespace FluentValidation.Extensions
 {
+    /// <inheritdoc/>
     public class ValidatorFactory : IValidatorFactory
     {
         private readonly IServiceProvider _serviceProvider;
+
+        /// <summary>
+        /// Constructs an instance of an object
+        /// </summary>
+        /// <param name="serviceProvider"></param>
         public ValidatorFactory(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }
 
+        /// <inheritdoc/>
         public IValidator GetValidator(Type? type)
         {
             if (type == null) throw new ArgumentNullException(nameof(type));
