@@ -32,6 +32,15 @@ namespace FluentValidation.Extensions.Tests
         }
 
         [TestMethod]
+        public void Validate_WithPassingValidator_Succeeds()
+        {
+            _validator.Check(_exampleModel).Using<ExampleModelValidator>()
+                      .Validate();
+
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(ValidationException))]
         public async Task ValidateAsync_WithFailingValidator_Throws()
         {
@@ -40,7 +49,17 @@ namespace FluentValidation.Extensions.Tests
             await _validator.Check(_exampleModel).Using<ExampleModelValidator>()
                             .ValidateAsync();
         }
-        
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void Validate_WithFailingValidator_Throws()
+        {
+            _exampleModel.ExampleString = null;
+
+            _validator.Check(_exampleModel).Using<ExampleModelValidator>()
+                      .Validate();
+        }
+
         [TestMethod]
         public async Task ValidateAsync_WithMultipleFailingValidators_ConcatenatesErrors()
         {
@@ -54,6 +73,28 @@ namespace FluentValidation.Extensions.Tests
                 await _validator.Check(_exampleModel).Using<ExampleModelValidator>()
                                 .Check(model2).Using<ExampleModelValidator>()
                                 .ValidateAsync();
+
+                Assert.IsTrue(false);
+            }
+            catch (ValidationException ex)
+            {
+                Assert.AreEqual(2, ex.Errors.Count());
+            }
+        }
+
+        [TestMethod]
+        public void Validate_WithMultipleFailingValidators_ConcatenatesErrors()
+        {
+            var model2 = ExampleModel.Example();
+
+            _exampleModel.ExampleString = null;
+            model2.ExampleString = null;
+
+            try
+            {
+                _validator.Check(_exampleModel).Using<ExampleModelValidator>()
+                          .Check(model2).Using<ExampleModelValidator>()
+                          .Validate();
 
                 Assert.IsTrue(false);
             }

@@ -46,8 +46,26 @@ namespace FluentValidation.Extensions
                 throw new ArgumentNullException(nameof(Context.ValidatorType));
 
             var tasks = _validations.Where(v => !v.IsOptional || (v.IsOptional && v.ValidationContext != null))
-                                    .Select(v => _validatorFactory.GetValidator(v.ValidatorType)?.ValidateAsync(v.ValidationContext));
+                                    .Select(v => _validatorFactory.GetValidator(v.ValidatorType).ValidateAsync(v.ValidationContext));
             var results = await Task.WhenAll(tasks);
+
+            return results.Errors();
+        }
+
+        public void Validate()
+        {
+            var errors = GetValidationErrors();
+            if (errors.Any())
+                throw new ValidationException(errors);
+        }
+
+        public IEnumerable<ValidationFailure> GetValidationErrors()
+        {
+            if (_validations.Any(v => v.ValidatorType == null))
+                throw new ArgumentNullException(nameof(Context.ValidatorType));
+
+            var results = _validations.Where(v => !v.IsOptional || (v.IsOptional && v.ValidationContext != null))
+                                      .Select(v => _validatorFactory.GetValidator(v.ValidatorType).Validate(v.ValidationContext)).ToArray();
 
             return results.Errors();
         }
