@@ -15,9 +15,9 @@ namespace FluentValidation.Extensions
         }
 
         public ValidationBuilder Using<TValidator>()
-            where TValidator : IValidator<TObj>, new()
+            where TValidator : IValidator<TObj>
         {
-            _context.Validator = new TValidator();
+            _context.ValidatorType = typeof(TValidator);
             return _builder;
         }
     }

@@ -1,5 +1,6 @@
 ﻿using FluentValidation.Extensions.Tests.Models;
 using FluentValidation.Extensions.Tests.Validators;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FluentValidation.Extensions.Tests
@@ -13,7 +14,12 @@ namespace FluentValidation.Extensions.Tests
 
         public MultivalidatorTests()
         {
-            _validator = new MultiValidator();
+            var sc = new ServiceCollection();
+            sc.AddSingleton<ExampleModelValidator>();
+            var provider = sc.BuildServiceProvider();
+            var factory = new ValidatorFactory(provider);
+
+            _validator = new MultiValidator(factory);
         }
 
         [TestMethod]

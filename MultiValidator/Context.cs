@@ -1,4 +1,6 @@
-﻿namespace FluentValidation.Extensions
+﻿using System;
+
+namespace FluentValidation.Extensions
 {
     internal class Context
     {
@@ -8,7 +10,7 @@
             IsOptional = isOptional;
         }
 
-        public IValidator? Validator { get; set; }
+        public Type? ValidatorType { get; set; }
         public IValidationContext? ValidationContext { get; set; }
         public bool IsOptional { get; set; }
     }

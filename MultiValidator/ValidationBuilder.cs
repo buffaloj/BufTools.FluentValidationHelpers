@@ -9,9 +9,11 @@ namespace FluentValidation.Extensions
     public class ValidationBuilder
     {
         private readonly IList<Context> _validations = new List<Context>();
+        private readonly IValidatorFactory _validatorFactory;
 
-        internal ValidationBuilder(Context context)
+        internal ValidationBuilder(Context context, IValidatorFactory validatorFactory)
         {
+            _validatorFactory = validatorFactory ?? throw new ArgumentNullException(nameof(validatorFactory));
             _validations.Add(context);
         }
 
@@ -40,11 +42,11 @@ namespace FluentValidation.Extensions
 
         public async Task<IEnumerable<ValidationFailure>> GetValidationErrorsAsync()
         {
-            if (_validations.Any(v => v.Validator == null))
-                throw new ArgumentNullException(nameof(Context.Validator));
+            if (_validations.Any(v => v.ValidatorType == null))
+                throw new ArgumentNullException(nameof(Context.ValidatorType));
 
             var tasks = _validations.Where(v => !v.IsOptional || (v.IsOptional && v.ValidationContext != null))
-                                    .Select(v => v.Validator?.ValidateAsync(v.ValidationContext));
+                                    .Select(v => _validatorFactory.GetValidator(v.ValidatorType)?.ValidateAsync(v.ValidationContext));
             var results = await Task.WhenAll(tasks);
 
             return results.Errors();
