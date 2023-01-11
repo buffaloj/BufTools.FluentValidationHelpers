@@ -1,8 +1,9 @@
-﻿using FluentValidation.Results;
+﻿using FluentValidation;
+using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FluentValidation.Extensions
+namespace FluentValidation.Extensions.Extensions
 {
     /// <summary>
     /// Helpers extensions

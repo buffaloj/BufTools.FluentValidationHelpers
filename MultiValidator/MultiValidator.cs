@@ -3,48 +3,42 @@
 namespace FluentValidation.Extensions
 {
     /// <summary>
-    /// A class used to build up sets of validations to perform as a group
+    /// A class used to build up a group of validations to perform as a set
     /// </summary>
     public class MultiValidator
     {
-        private readonly IValidatorFactory _validatorFactory;
+        private readonly IValidatorFactory _factory;
 
         /// <summary>
         /// Constructs an instance of an object
         /// </summary>
-        /// <param name="validatorFactory"></param>
-        /// <exception cref="ArgumentNullException"></exception>
-        public MultiValidator(IValidatorFactory validatorFactory)
-        {
-            _validatorFactory = validatorFactory ?? throw new ArgumentNullException(nameof(validatorFactory));
-        }
+        /// <param name="validatorFactory">A factory to use to create <see cref="IValidator"/> instances</param>
+        public MultiValidator(IValidatorFactory validatorFactory) => _factory = validatorFactory;
 
         /// <summary>
-        /// Adds an object to the validation
+        /// Supplies an instance of an object to validate
         /// </summary>
-        /// <typeparam name="TObj">The type of the object to validate</typeparam>
-        /// <param name="toValidate">The object to validate</param>
-        /// <returns>A <see cref="ContextBuilder{TObj}"/> instance so more info can be provided for the validation</returns>
-        public ContextBuilder<TObj> Check<TObj>(TObj toValidate)
+        /// <typeparam name="TObj">The Type of the object to validate</typeparam>
+        /// <param name="instance">An instance to validate</param>
+        /// <returns>A <see cref="ValidationBuilder{TObj}"/> instance to fluently supply the type of validator to use</returns>
+        public ValidationBuilder<TObj> For<TObj>(TObj instance)
             where TObj : class
-        {   
-            var context = new Context(new ValidationContext<TObj>(toValidate), false);
-            var builder = new ValidationBuilder(context, _validatorFactory);
-            return new ContextBuilder<TObj>(context, builder);
+        {
+            var aggregator = new ValidationAggregator(_factory);
+            return aggregator.For(instance);
         }
 
         /// <summary>
-        /// Adds an optional object to the validation - the validation will pass when the object is null
+        /// Supplies an instance of an object to validate that will be skipped if null with no error returned
         /// </summary>
-        /// <typeparam name="TObj">The type of the object to validate</typeparam>
-        /// <param name="toValidate">The object to validate</param>
-        /// <returns>A <see cref="ContextBuilder{TObj}"/> instance so more info can be provided for the validation</returns>
-        public ContextBuilder<TObj> CheckOptional<TObj>(TObj? toValidate)
-           where TObj : class
+        /// <typeparam name="TObj">The Type of the object to validate</typeparam>
+        /// <param name="instance">An instance to validate</param>
+        /// <returns>A <see cref="ValidationBuilder{TObj}"/> instance to fluently supply the type of validator to use</returns>
+        public ValidationBuilder<TObj> ForOptional<TObj>(TObj instance)
+            where TObj : class
         {
-            var context = new Context((toValidate != null) ? new ValidationContext<TObj>(toValidate) : null, true);
-            var builder = new ValidationBuilder(context, _validatorFactory);
-            return new ContextBuilder<TObj>(context, builder);
+            var aggregator = new ValidationAggregator(_factory);
+            return aggregator.ForOptional(instance);
         }
     }
 }

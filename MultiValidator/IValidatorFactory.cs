@@ -3,15 +3,15 @@
 namespace FluentValidation.Extensions
 {
     /// <summary>
-    /// A factory interface to create instances of a validator
+    /// An interface to create <see cref="IValidator"/> instances
     /// </summary>
     public interface IValidatorFactory
     {
         /// <summary>
-        /// Fetches an instance of a validator
+        /// Gets an instance of a validator
         /// </summary>
-        /// <param name="type">The type the validator must be</param>
-        /// <returns>A validator instance</returns>
-        IValidator GetValidator(Type? type);
+        /// <param name="type">The type of validator to get</param>
+        /// <returns>A <see cref="IValidator"/> instance</returns>
+        IValidator GetValidator(Type type);
     }
 }
