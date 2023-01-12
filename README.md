@@ -21,14 +21,14 @@ public class MyClass
 {
     private readonly MultiValidator validator;
 	
-	public MyClass(MultiValidator validator) => this.validator = validator
+    public MyClass(MultiValidator validator) => this.validator = validator
 	
-	public async Task DoUserTaskAsync(string name, DateTime dob, UserFilter filter = null)
-	{
+    public async Task DoUserTaskAsync(string name, DateTime dob, UserFilter filter = null)
+    {
         await validator.For(name).Use<NameValidator>()
                        .For(dob).Use<DobValidator>()
                        .ForOptional(filter).Use<UserFilterValidator>()
                        .ValidateAsync();
-	}
+    }
 }
 ```
