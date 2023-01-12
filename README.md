@@ -25,7 +25,7 @@ public class MyClass
 	
 	public async Task DoUserTaskAsync(string name, DateTime dob, UserFilter filter = null)
 	{
-		await validator.For(name).Use<NameValidator>()
+        await validator.For(name).Use<NameValidator>()
                        .For(dob).Use<DobValidator>()
                        .ForOptional(filter).Use<UserFilterValidator>()
                        .ValidateAsync();
