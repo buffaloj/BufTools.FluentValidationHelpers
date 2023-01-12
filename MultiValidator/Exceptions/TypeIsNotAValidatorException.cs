@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FluentValidation.Extensions.Exceptions
+namespace MultiValidator.Exceptions
 {
     /// <summary>
     /// Thrown if the type of a validator is not actually a validator

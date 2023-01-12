@@ -1,7 +1,8 @@
-﻿using FluentValidation.Extensions.Exceptions;
+﻿using FluentValidation;
+using MultiValidator.Exceptions;
 using System;
 
-namespace FluentValidation.Extensions
+namespace MultiValidator
 {
     /// <summary>
     /// A class that builds a validation and adds it to a <see cref="ValidationAggregator"/>
@@ -33,7 +34,7 @@ namespace FluentValidation.Extensions
         /// <summary>
         /// Supplies the type of <see cref="IValidator"/> to use in the validation
         /// </summary>
-        /// <typeparam name="TValidator">The type of <see cref="IValidator" to perform the validation/></typeparam>
+        /// <typeparam name="TValidator">The type of <see cref="IValidator"/> to perform the validation</typeparam>
         /// <returns>A class to use in adding more validations to the chain</returns>
         public ValidationAggregator Use<TValidator>()
             where TValidator : IValidator<TObj> 

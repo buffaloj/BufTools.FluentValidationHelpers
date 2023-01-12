@@ -1,12 +1,13 @@
-﻿using FluentValidation.Extensions.Exceptions;
-using FluentValidation.Extensions.Extensions;
+﻿using MultiValidator.Exceptions;
+using MultiValidator.Extensions;
 using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentValidation;
 
-namespace FluentValidation.Extensions
+namespace MultiValidator
 {
     /// <summary>
     /// Class that aggregates multiple validations together and performs them as a group.

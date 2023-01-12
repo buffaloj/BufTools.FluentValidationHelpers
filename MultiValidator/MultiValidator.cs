@@ -1,4 +1,7 @@
-﻿namespace FluentValidation.Extensions
+﻿using FluentValidation;
+using MultiValidator.Exceptions;
+
+namespace MultiValidator
 {
     /// <summary>
     /// A class used to build up a group of validations to perform as a set

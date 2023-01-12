@@ -1,4 +1,4 @@
-﻿namespace FluentValidation.Extensions.Tests.Models
+﻿namespace MultiValidator.Tests.Models
 {
     public class ExampleModel
     {

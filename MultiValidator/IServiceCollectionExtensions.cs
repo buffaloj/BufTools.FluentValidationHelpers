@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace FluentValidation.Extensions
+namespace MultiValidator
 {
     /// <summary>
     /// A helper class to register a <see cref="MultiValidator"/> for use with dependency injection

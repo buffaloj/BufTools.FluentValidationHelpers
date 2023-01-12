@@ -9,8 +9,10 @@
     <Description>This lets you chain multiple Fluent Validations together and evaluate them as a group.</Description>
     <PackageProjectUrl>https://github.com/JeremyShull/MultiValidator</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <DocumentationFile />
   </PropertyGroup>
-
+  
   <ItemGroup>
     <None Include="..\README.md">
       <Pack>True</Pack>

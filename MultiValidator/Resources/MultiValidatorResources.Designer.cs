@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FluentValidation.Extensions.Resources {
+namespace MultiValidator.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace FluentValidation.Extensions.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("FluentValidation.Extensions.Resources.MultiValidatorResources", typeof(MultiValidatorResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MultiValidator.Resources.MultiValidatorResources", typeof(MultiValidatorResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

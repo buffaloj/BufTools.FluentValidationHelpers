@@ -1,8 +1,9 @@
-﻿using FluentValidation.Extensions.Exceptions;
-using FluentValidation.Extensions.Resources;
+﻿using FluentValidation;
+using MultiValidator.Exceptions;
+using MultiValidator.Resources;
 using System;
 
-namespace FluentValidation.Extensions
+namespace MultiValidator
 {
     /// <inheritdoc/>
     public class ValidatorFactory : IValidatorFactory

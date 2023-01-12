@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FluentValidation.Extensions.Exceptions
+namespace MultiValidator.Exceptions
 {
     /// <summary>
     /// Thrown if a non-optional object to be validated is null
