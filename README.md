@@ -21,7 +21,7 @@ public class MyClass
 {
     private readonly MultiValidator validator;
 	
-    public MyClass(MultiValidator validator) => this.validator = validator
+    public MyClass(MultiValidator validator) => this.validator = validator;
 	
     public async Task DoUserTaskAsync(string name, DateTime dob, UserFilter filter = null)
     {
