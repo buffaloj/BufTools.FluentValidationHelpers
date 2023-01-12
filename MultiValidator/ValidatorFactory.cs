@@ -7,15 +7,15 @@ namespace FluentValidation.Extensions
     /// <inheritdoc/>
     public class ValidatorFactory : IValidatorFactory
     {
-        private readonly IServiceProvider? _serviceProvider;
+        private readonly IServiceProvider _serviceProvider;
 
         /// <summary>
         /// Constructs an instance of an object
         /// </summary>
         /// <param name="serviceProvider">The provider to use to create validators</param>
-        public ValidatorFactory(IServiceProvider? serviceProvider)
+        public ValidatorFactory(IServiceProvider serviceProvider)
         {
-            _serviceProvider = serviceProvider;
+            _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
         }
 
         /// <inheritdoc/>

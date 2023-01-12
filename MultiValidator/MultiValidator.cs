@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace FluentValidation.Extensions
+﻿namespace FluentValidation.Extensions
 {
     /// <summary>
     /// A class used to build up a group of validations to perform as a set
@@ -21,6 +19,8 @@ namespace FluentValidation.Extensions
         /// <typeparam name="TObj">The Type of the object to validate</typeparam>
         /// <param name="instance">An instance to validate</param>
         /// <returns>A <see cref="ValidationBuilder{TObj}"/> instance to fluently supply the type of validator to use</returns>
+        /// <exception cref="NullObjectException">Thrown if the instance is null</exception>
+        /// <exception cref="ValidatorTypeNotFoundException">Thrown when the validator type is not found in the service provider</exception>
         public ValidationBuilder<TObj> For<TObj>(TObj instance)
             where TObj : class
         {
@@ -34,7 +34,8 @@ namespace FluentValidation.Extensions
         /// <typeparam name="TObj">The Type of the object to validate</typeparam>
         /// <param name="instance">An instance to validate</param>
         /// <returns>A <see cref="ValidationBuilder{TObj}"/> instance to fluently supply the type of validator to use</returns>
-        public ValidationBuilder<TObj> ForOptional<TObj>(TObj instance)
+        /// <exception cref="ValidatorTypeNotFoundException">Thrown when the validator type is not found in the service provider</exception>
+        public ValidationBuilder<TObj> ForOptional<TObj>(TObj? instance)
             where TObj : class
         {
             var aggregator = new ValidationAggregator(_factory);

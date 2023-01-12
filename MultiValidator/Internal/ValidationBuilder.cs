@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentValidation.Extensions.Exceptions;
+using System;
 
 namespace FluentValidation.Extensions
 {
@@ -11,7 +12,7 @@ namespace FluentValidation.Extensions
     {
         private readonly ValidationAggregator _aggregator;
         private readonly bool _isOptional;
-        private readonly TObj _instance;
+        private readonly TObj? _instance;
 
         /// <summary>
         /// Constructs an instance of an object
@@ -20,7 +21,7 @@ namespace FluentValidation.Extensions
         /// <param name="instance">The object instance to validate</param>
         /// <param name="isOptional">Indicates of null instance values are ok and can be skipped</param>
         /// <exception cref="ArgumentNullException"></exception>
-        internal ValidationBuilder(ValidationAggregator aggregator, TObj instance, bool isOptional)
+        internal ValidationBuilder(ValidationAggregator aggregator, TObj? instance, bool isOptional)
         {
             _aggregator = aggregator ?? throw new ArgumentNullException(nameof(aggregator));
             _instance = instance;
@@ -39,6 +40,9 @@ namespace FluentValidation.Extensions
         {
             if (_isOptional && _instance == null)
                 return _aggregator;
+
+            if (_instance == null)
+                throw new NullObjectException(string.Format(Resources.MultiValidatorResources.InstanceNullErrorFormat, typeof(TValidator)));
 
             var context = new ValidationContext<TObj>(_instance);
             var validation = new Validation(context, typeof(TValidator));

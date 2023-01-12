@@ -61,6 +61,15 @@ namespace FluentValidation.Extensions.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Instance to validate of type &apos;{0}&apos; is null.
+        /// </summary>
+        public static string InstanceNullErrorFormat {
+            get {
+                return ResourceManager.GetString("InstanceNullErrorFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Could not find validator of type {0}.
         /// </summary>
         public static string TypeIsNotAValidatorFormat {
