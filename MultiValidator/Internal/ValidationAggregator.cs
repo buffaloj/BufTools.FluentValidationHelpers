@@ -3,6 +3,7 @@ using FluentValidation.Extensions.Extensions;
 using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FluentValidation.Extensions
@@ -64,9 +65,9 @@ namespace FluentValidation.Extensions
         /// </summary>
         /// <returns>A <see cref="Task"/> to await</returns>
         /// <exception cref="ValidationException">Thrown if any of the objects have a validation error</exception>
-        public async Task ValidateAsync()
+        public async Task ValidateAsync(CancellationToken cancellation = new CancellationToken())
         {
-            var errors = await GetValidationErrorsAsync();
+            var errors = await GetValidationErrorsAsync(cancellation);
             if (errors.Any())
                 throw new ValidationException(errors);
         }
@@ -76,9 +77,9 @@ namespace FluentValidation.Extensions
         /// </summary>
         /// <returns>A collection of error or an empty one if there are no errors.</returns>
         /// <exception cref="ValidatorTypeNotFoundException">Thrown if any of ther validators were not found</exception>
-        public async Task<IEnumerable<ValidationFailure>> GetValidationErrorsAsync()
+        public async Task<IEnumerable<ValidationFailure>> GetValidationErrorsAsync(CancellationToken cancellation = new CancellationToken())
         {
-            var tasks = _validations.Select(v => _validatorFactory.GetValidator(v.ValidatorType).ValidateAsync(v.ValidationContext));
+            var tasks = _validations.Select(v => _validatorFactory.GetValidator(v.ValidatorType).ValidateAsync(v.ValidationContext, cancellation));
             var results = await Task.WhenAll(tasks);
 
             return results.Errors();

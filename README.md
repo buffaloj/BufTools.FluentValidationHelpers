@@ -2,10 +2,10 @@
 Simplifies validating multiple properties with multiple FluentValidators into one function call.
 
 ```cs
-await _validator.For(request).Use<RequestValidator>()
-                .For(endDate).Use<EndDateValidator>()
-                .ForOptional(requestFilter).Use<RequestFilterValidator>()
-                .ValidateAsync();
+await validator.For(request).Use<RequestValidator>()
+               .For(endDate).Use<EndDateValidator>()
+               .ForOptional(requestFilter).Use<RequestFilterValidator>()
+               .ValidateAsync();
 ```
 
 # Getting Started
