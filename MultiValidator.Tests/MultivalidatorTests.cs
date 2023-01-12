@@ -7,13 +7,13 @@ using FluentValidation;
 namespace MultiValidation.Tests
 {
     [TestClass]
-    public class MultivalidatorTests
+    public class MultiValidatorTests
     {
         private readonly MultiValidator _validator;
 
         private readonly ExampleModel _exampleModel = ExampleModel.Example();
 
-        public MultivalidatorTests()
+        public MultiValidatorTests()
         {
             var sc = new ServiceCollection();
             sc.AddSingleton<ExampleModelValidator>();
