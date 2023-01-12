@@ -26,17 +26,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Resources\MultiValidatorResources.Designer.cs">
+    <Compile Update="Resources\MultiValidationResources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>MultiValidatorResources.resx</DependentUpon>
+      <DependentUpon>MultiValidationResources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Resources\MultiValidatorResources.resx">
+    <EmbeddedResource Update="Resources\MultiValidationResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>MultiValidatorResources.Designer.cs</LastGenOutput>
+      <LastGenOutput>MultiValidationResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

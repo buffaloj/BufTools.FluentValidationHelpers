@@ -1,8 +1,9 @@
 ﻿using FluentValidation;
-using MultiValidator.Exceptions;
+using MultiValidation.Exceptions;
+using MultiValidation.Resources;
 using System;
 
-namespace MultiValidator
+namespace MultiValidation
 {
     /// <summary>
     /// A class that builds a validation and adds it to a <see cref="ValidationAggregator"/>
@@ -43,7 +44,7 @@ namespace MultiValidator
                 return _aggregator;
 
             if (_instance == null)
-                throw new NullObjectException(string.Format(Resources.MultiValidatorResources.InstanceNullErrorFormat, typeof(TValidator)));
+                throw new NullObjectException(string.Format(MultiValidationResources.InstanceNullErrorFormat, typeof(TValidator)));
 
             var context = new ValidationContext<TObj>(_instance);
             var validation = new Validation(context, typeof(TValidator));

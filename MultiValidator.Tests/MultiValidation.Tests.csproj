@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MultiValidator\MultiValidator.csproj" />
+    <ProjectReference Include="..\MultiValidator\MultiValidation.csproj" />
   </ItemGroup>
 
 </Project>

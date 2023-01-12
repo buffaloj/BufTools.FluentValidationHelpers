@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using System;
 
-namespace MultiValidator
+namespace MultiValidation
 {
     /// <summary>
     /// A storage class to hold the object instance to validate and the type of validator to use

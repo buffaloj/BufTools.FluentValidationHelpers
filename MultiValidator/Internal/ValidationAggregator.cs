@@ -1,5 +1,5 @@
-﻿using MultiValidator.Exceptions;
-using MultiValidator.Extensions;
+﻿using MultiValidation.Exceptions;
+using MultiValidation.Extensions;
 using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
 
-namespace MultiValidator
+namespace MultiValidation
 {
     /// <summary>
     /// Class that aggregates multiple validations together and performs them as a group.

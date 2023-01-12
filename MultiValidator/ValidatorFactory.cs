@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using MultiValidator.Exceptions;
-using MultiValidator.Resources;
+using MultiValidation.Exceptions;
+using MultiValidation.Resources;
 using System;
 
-namespace MultiValidator
+namespace MultiValidation
 {
     /// <inheritdoc/>
     public class ValidatorFactory : IValidatorFactory
@@ -25,12 +25,12 @@ namespace MultiValidator
             if (type == null) throw new ArgumentNullException(nameof(type));
 
             if (!typeof(IValidator).IsAssignableFrom(type))
-                throw new TypeIsNotAValidatorException(string.Format(MultiValidatorResources.TypeIsNotAValidatorFormat, type.Name));
+                throw new TypeIsNotAValidatorException(string.Format(MultiValidationResources.TypeIsNotAValidatorFormat, type.Name));
 
             var validator = (_serviceProvider != null) ? _serviceProvider.GetService(type) : Activator.CreateInstance(type);
 
             if (validator == null)
-                throw new ValidatorTypeNotFoundException(string.Format(MultiValidatorResources.ValidatorTypeNotFoundFormat, type.Name));
+                throw new ValidatorTypeNotFoundException(string.Format(MultiValidationResources.ValidatorTypeNotFoundFormat, type.Name));
 
             return (IValidator)validator;
         }

@@ -3,7 +3,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MultiValidator.Extensions
+namespace MultiValidation.Extensions
 {
     /// <summary>
     /// Helpers extensions

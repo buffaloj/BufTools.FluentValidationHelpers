@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using System;
 
-namespace MultiValidator
+namespace MultiValidation
 {
     /// <summary>
     /// An interface to create <see cref="IValidator"/> instances

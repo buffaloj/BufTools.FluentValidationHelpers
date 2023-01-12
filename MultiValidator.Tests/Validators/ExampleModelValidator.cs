@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using MultiValidator.Tests.Models;
+using MultiValidation.Tests.Models;
 
-namespace MultiValidator.Tests.Validators
+namespace MultiValidation.Tests.Validators
 {
     public class ExampleModelValidator : AbstractValidator<ExampleModel>
     {

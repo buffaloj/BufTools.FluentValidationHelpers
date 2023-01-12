@@ -1,10 +1,10 @@
-﻿using MultiValidator.Tests.Models;
-using MultiValidator.Tests.Validators;
+﻿using MultiValidation.Tests.Models;
+using MultiValidation.Tests.Validators;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FluentValidation;
 
-namespace MultiValidator.Tests
+namespace MultiValidation.Tests
 {
     [TestClass]
     public class MultivalidatorTests

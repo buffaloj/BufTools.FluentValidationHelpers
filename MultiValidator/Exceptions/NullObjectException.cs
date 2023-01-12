@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MultiValidator.Exceptions
+namespace MultiValidation.Exceptions
 {
     /// <summary>
     /// Thrown if a non-optional object to be validated is null

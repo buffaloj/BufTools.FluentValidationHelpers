@@ -1,4 +1,4 @@
-﻿namespace MultiValidator.Tests.Models
+﻿namespace MultiValidation.Tests.Models
 {
     public class ExampleModel
     {
