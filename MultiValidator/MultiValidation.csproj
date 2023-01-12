@@ -7,7 +7,7 @@
     <Authors>Jeremy Shull</Authors>
     <Company />
     <Description>This lets you chain multiple Fluent Validations together and evaluate them as a group.</Description>
-    <PackageProjectUrl>https://github.com/JeremyShull/MultiValidator</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/buffaloj/MultiValidator</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <DocumentationFile />
