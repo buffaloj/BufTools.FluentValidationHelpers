@@ -22,10 +22,9 @@ namespace MultiValidation
         /// <typeparam name="TObj">The Type of the object to validate</typeparam>
         /// <param name="instance">An instance to validate</param>
         /// <returns>A <see cref="ValidationBuilder{TObj}"/> instance to fluently supply the type of validator to use</returns>
-        /// <exception cref="NullObjectException">Thrown if the instance is null</exception>
-        /// <exception cref="ValidatorTypeNotFoundException">Thrown when the validator type is not found in the service provider</exception>
+        /// <exception cref="NonOptionalNullValidation">Thrown if the instance is null</exception>
+        /// <exception cref="ValidatorTypeNotFound">Thrown when the validator type is not found in the service provider</exception>
         public ValidationBuilder<TObj> For<TObj>(TObj instance)
-            where TObj : class
         {
             var aggregator = new ValidationAggregator(_factory);
             return aggregator.For(instance);
@@ -37,9 +36,8 @@ namespace MultiValidation
         /// <typeparam name="TObj">The Type of the object to validate</typeparam>
         /// <param name="instance">An instance to validate</param>
         /// <returns>A <see cref="ValidationBuilder{TObj}"/> instance to fluently supply the type of validator to use</returns>
-        /// <exception cref="ValidatorTypeNotFoundException">Thrown when the validator type is not found in the service provider</exception>
-        public ValidationBuilder<TObj> ForOptional<TObj>(TObj? instance)
-            where TObj : class
+        /// <exception cref="ValidatorTypeNotFound">Thrown when the validator type is not found in the service provider</exception>
+        public ValidationBuilder<TObj> ForOptional<TObj>(TObj instance)
         {
             var aggregator = new ValidationAggregator(_factory);
             return aggregator.ForOptional(instance);

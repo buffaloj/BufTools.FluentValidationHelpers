@@ -3,15 +3,15 @@
 namespace MultiValidation.Exceptions
 {
     /// <summary>
-    /// Thrown if the type of a validator cannot be found in the service collection
+    /// Thrown if a non-optional object to be validated is null
     /// </summary>
-    public class ValidatorTypeNotFoundException : Exception
+    public class NonOptionalNullValidation : Exception
     {
         /// <summary>
         /// Constructs an instance of an object
         /// </summary>
         /// <param name="message">The reason behind the exception</param>
-        public ValidatorTypeNotFoundException(string message) : base(message)
+        public NonOptionalNullValidation(string message) : base(message)
         {
         }
     }

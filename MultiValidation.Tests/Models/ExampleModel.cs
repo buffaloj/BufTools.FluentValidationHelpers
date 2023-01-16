@@ -2,7 +2,7 @@
 {
     public class ExampleModel
     {
-        public string? ExampleString { get; set; }
+        public string ExampleString { get; set; }
         public int? ExampleInt { get; set; }
         public float? ExampleFloat { get; set; }
         public bool? ExampleBool { get; set; }

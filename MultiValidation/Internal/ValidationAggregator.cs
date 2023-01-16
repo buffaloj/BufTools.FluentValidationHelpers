@@ -40,10 +40,9 @@ namespace MultiValidation
         /// <typeparam name="TObj">The Type of the object to validate</typeparam>
         /// <param name="instance">An instance to validate</param>
         /// <returns>A <see cref="ValidationBuilder{TObj}"/> instance to fluently supply the type of validator to use</returns>
-        /// <exception cref="NullObjectException">Thrown if the instance is null</exception>
-        /// <exception cref="ValidatorTypeNotFoundException">Thrown when the validator type is not found in the service provider</exception>
+        /// <exception cref="NonOptionalNullValidation">Thrown if the instance is null</exception>
+        /// <exception cref="ValidatorTypeNotFound">Thrown when the validator type is not found in the service provider</exception>
         public ValidationBuilder<TObj> For<TObj>(TObj instance)
-            where TObj : class
         {
             return new ValidationBuilder<TObj>(this, instance, false);
         }
@@ -54,9 +53,8 @@ namespace MultiValidation
         /// <typeparam name="TObj">The Type of the object to validate</typeparam>
         /// <param name="instance">An instance to validate</param>
         /// <returns>A <see cref="ValidationBuilder{TObj}"/> instance to fluently supply the type of validator to use</returns>
-        /// <exception cref="ValidatorTypeNotFoundException">Thrown when the validator type is not found in the service provider</exception>
-        public ValidationBuilder<TObj> ForOptional<TObj>(TObj? instance)
-            where TObj : class
+        /// <exception cref="ValidatorTypeNotFound">Thrown when the validator type is not found in the service provider</exception>
+        public ValidationBuilder<TObj> ForOptional<TObj>(TObj instance)
         {
             return new ValidationBuilder<TObj>(this, instance, true);
         }
@@ -77,7 +75,7 @@ namespace MultiValidation
         /// Asynchronously performs validation on all objects in this set and returns any errors found
         /// </summary>
         /// <returns>A collection of error or an empty one if there are no errors.</returns>
-        /// <exception cref="ValidatorTypeNotFoundException">Thrown if any of ther validators were not found</exception>
+        /// <exception cref="ValidatorTypeNotFound">Thrown if any of ther validators were not found</exception>
         public async Task<IEnumerable<ValidationFailure>> GetValidationErrorsAsync(CancellationToken cancellation = new CancellationToken())
         {
             var tasks = _validations.Select(v => _validatorFactory.GetValidator(v.ValidatorType).ValidateAsync(v.ValidationContext, cancellation));
@@ -101,7 +99,7 @@ namespace MultiValidation
         /// Synchronously performs validation on all objects in this set and returns any errors found
         /// </summary>
         /// <returns>A collection of error or an empty one if there are no errors.</returns>
-        /// <exception cref="ValidatorTypeNotFoundException">Thrown if any of ther validators were not found</exception>
+        /// <exception cref="ValidatorTypeNotFound">Thrown if any of ther validators were not found</exception>
         public IEnumerable<ValidationFailure> GetValidationErrors()
         {
             var results = _validations.Select(v => _validatorFactory.GetValidator(v.ValidatorType).Validate(v.ValidationContext)).ToArray();

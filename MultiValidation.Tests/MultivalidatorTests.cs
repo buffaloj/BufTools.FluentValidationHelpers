@@ -17,6 +17,8 @@ namespace MultiValidation.Tests
         {
             var sc = new ServiceCollection();
             sc.AddSingleton<ExampleModelValidator>();
+            sc.AddSingleton<ExampleIntValidator>();
+            sc.AddSingleton<ExampleNullableIntValidator>();
             var provider = sc.BuildServiceProvider();
 
             _validator = new MultiValidator(new ValidatorFactory(provider));
@@ -35,6 +37,28 @@ namespace MultiValidation.Tests
         public async Task WithValidateAsync_WithPassingModel_Succeeds()
         {
             await _validator.For(_exampleModel).Use<ExampleModelValidator>()
+                            .ValidateAsync();
+
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        public async Task WithValidateAsync_WithNonReferenceType_Succeeds()
+        {
+            int i = 5;
+
+            await _validator.For(i).Use<ExampleIntValidator>()
+                            .ValidateAsync();
+
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        public async Task WithValidateAsync_WithOptionalNullableNonReferenceType_Succeeds()
+        {
+            int? i = 5;
+
+            await _validator.ForOptional(i).Use<ExampleNullableIntValidator>()
                             .ValidateAsync();
 
             Assert.IsTrue(true);
@@ -116,7 +140,7 @@ namespace MultiValidation.Tests
         [TestMethod]
         public async Task MultiValidator_WithOptionalNullObjectToValidate_Succeeds()
         {
-            ExampleModel? nullModel = default;
+            ExampleModel nullModel = null;
             await _validator.ForOptional(nullModel).Use<ExampleModelValidator>()
                             .ValidateAsync();
 
@@ -126,7 +150,7 @@ namespace MultiValidation.Tests
         [TestMethod]
         public async Task ValidationBuilder_WithOptionalNullObjectToValidate_Succeeds()
         {
-            ExampleModel? nullModel = default;
+            ExampleModel nullModel = default;
             await _validator.ForOptional(_exampleModel).Use<ExampleModelValidator>()
                             .ForOptional(nullModel).Use<ExampleModelValidator>()
                             .ValidateAsync();

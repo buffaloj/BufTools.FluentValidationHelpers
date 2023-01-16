@@ -25,12 +25,12 @@ namespace MultiValidation
             if (type == null) throw new ArgumentNullException(nameof(type));
 
             if (!typeof(IValidator).IsAssignableFrom(type))
-                throw new TypeIsNotAValidatorException(string.Format(MultiValidationResources.TypeIsNotAValidatorFormat, type.Name));
+                throw new TypeIsNotAValidator(string.Format(MultiValidationResources.TypeIsNotAValidatorFormat, type.Name));
 
             var validator = (_serviceProvider != null) ? _serviceProvider.GetService(type) : Activator.CreateInstance(type);
 
             if (validator == null)
-                throw new ValidatorTypeNotFoundException(string.Format(MultiValidationResources.ValidatorTypeNotFoundFormat, type.Name));
+                throw new ValidatorTypeNotFound(string.Format(MultiValidationResources.ValidatorTypeNotFoundFormat, type.Name));
 
             return (IValidator)validator;
         }

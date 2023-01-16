@@ -1,5 +1,5 @@
 # MultiValidator
-Simplifies validating multiple properties with multiple FluentValidators into one function call.
+Simplifies validating multiple properties with multiple FluentValidators in one function call.
 
 ```cs
 await validator.For(request).Use<RequestValidator>()
