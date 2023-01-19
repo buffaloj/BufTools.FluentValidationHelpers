@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MultiValidation.Resources {
+namespace BufTools.Aggregation.FluentValidation.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace MultiValidation.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MultiValidation.Resources.MultiValidationResources", typeof(MultiValidationResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BufTools.Aggregation.FluentValidation.Resources.MultiValidationResources", typeof(MultiValidationResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -70,7 +70,7 @@ namespace MultiValidation.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Could not find validator of type {0}.
+        ///   Looks up a localized string similar to {0} does not implement IValidator interface..
         /// </summary>
         public static string TypeIsNotAValidatorFormat {
             get {
@@ -79,7 +79,7 @@ namespace MultiValidation.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} does not implement IValidator interface..
+        ///   Looks up a localized string similar to Could not find validator of type {0}.
         /// </summary>
         public static string ValidatorTypeNotFoundFormat {
             get {

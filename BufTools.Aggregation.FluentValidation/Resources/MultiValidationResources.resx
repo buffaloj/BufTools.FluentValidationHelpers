@@ -121,9 +121,9 @@
     <value>Instance to validate of type '{0}' is null</value>
   </data>
   <data name="TypeIsNotAValidatorFormat" xml:space="preserve">
-    <value>Could not find validator of type {0}</value>
+    <value>{0} does not implement IValidator interface.</value>
   </data>
   <data name="ValidatorTypeNotFoundFormat" xml:space="preserve">
-    <value>{0} does not implement IValidator interface.</value>
+    <value>Could not find validator of type {0}</value>
   </data>
 </root>

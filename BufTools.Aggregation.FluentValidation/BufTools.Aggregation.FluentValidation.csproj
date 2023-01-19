@@ -6,7 +6,7 @@
     <Authors>Jeremy Shull</Authors>
     <Company />
     <Description>This lets you easily chain multiple Fluent Validations together and evaluate them as a group. </Description>
-    <PackageProjectUrl>https://github.com/buffaloj/MultiValidator</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/buffaloj/BufTools.Aggregation.FluentValidation</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <DocumentationFile />
@@ -16,11 +16,11 @@
     <Copyright>Copyright (c) Jeremy Shull, 2023</Copyright>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseFile>License.txt</PackageLicenseFile>
-    <AssemblyVersion>1.0.1</AssemblyVersion>
-    <FileVersion>1.0.1</FileVersion>
+    <AssemblyVersion>1.0.2</AssemblyVersion>
+    <FileVersion>1.0.2</FileVersion>
     <NeutralLanguage>en</NeutralLanguage>
     <PackageIcon>icon.png</PackageIcon>
-    <Version>1.0.1</Version>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">

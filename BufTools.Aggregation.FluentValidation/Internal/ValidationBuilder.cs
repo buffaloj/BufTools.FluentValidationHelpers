@@ -1,6 +1,6 @@
-﻿using FluentValidation;
+﻿using BufTools.Aggregation.FluentValidation.Resources;
+using FluentValidation;
 using MultiValidation.Exceptions;
-using MultiValidation.Resources;
 using System;
 
 namespace MultiValidation
