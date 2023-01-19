@@ -12,7 +12,7 @@
     <DocumentationFile />
     <PackageTags>fluentvalidation;validation</PackageTags>
     <RepositoryUrl>https://github.com/buffaloj/MultiValidator</RepositoryUrl>
-    <PackageId>BufTools.Aggregation.FluentValidation</PackageId>
+    <PackageId>$(AssemblyName)</PackageId>
     <Copyright>Copyright (c) Jeremy Shull, 2023</Copyright>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseFile>License.txt</PackageLicenseFile>
