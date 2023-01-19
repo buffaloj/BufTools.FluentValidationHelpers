@@ -11,7 +11,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <DocumentationFile />
     <PackageTags>fluentvalidation;validation</PackageTags>
-    <RepositoryUrl>https://github.com/buffaloj/MultiValidator</RepositoryUrl>
+    <RepositoryUrl>https://github.com/buffaloj/BufTools.Aggregation.FluentValidation</RepositoryUrl>
     <PackageId>$(AssemblyName)</PackageId>
     <Copyright>Copyright (c) Jeremy Shull, 2023</Copyright>
     <RepositoryType>git</RepositoryType>
