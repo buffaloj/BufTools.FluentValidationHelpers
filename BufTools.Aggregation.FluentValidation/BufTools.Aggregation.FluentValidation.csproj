@@ -15,13 +15,14 @@
     <PackageId>$(AssemblyName)</PackageId>
     <Copyright>Copyright (c) Jeremy Shull, 2023</Copyright>
     <RepositoryType>git</RepositoryType>
-    <AssemblyVersion>1.0.2</AssemblyVersion>
-    <FileVersion>1.0.2</FileVersion>
+    <AssemblyVersion>1.0.4</AssemblyVersion>
+    <FileVersion>1.0.4</FileVersion>
     <NeutralLanguage>en</NeutralLanguage>
     <PackageIcon>icon.png</PackageIcon>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <Title>Fluent Validation Aggregation</Title>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageReleaseNotes>Added package certificate signing.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
