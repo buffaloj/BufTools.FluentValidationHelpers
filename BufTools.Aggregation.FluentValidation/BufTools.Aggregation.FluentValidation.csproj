@@ -15,12 +15,13 @@
     <PackageId>$(AssemblyName)</PackageId>
     <Copyright>Copyright (c) Jeremy Shull, 2023</Copyright>
     <RepositoryType>git</RepositoryType>
-    <PackageLicenseFile>License.txt</PackageLicenseFile>
     <AssemblyVersion>1.0.2</AssemblyVersion>
     <FileVersion>1.0.2</FileVersion>
     <NeutralLanguage>en</NeutralLanguage>
     <PackageIcon>icon.png</PackageIcon>
     <Version>1.0.3</Version>
+    <Title>Fluent Validation Aggregation</Title>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
@@ -57,10 +58,6 @@
 
   
   <ItemGroup>
-    <None Include="..\License.txt" Link="License.txt">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
     <None Include="..\README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
