@@ -1,4 +1,4 @@
-﻿using BufTools.Aggregation.FluentValidation.Resources;
+﻿using BufTools.FluentValidation.Aggregation.Resources;
 using FluentValidation;
 using MultiValidation.Exceptions;
 using System;

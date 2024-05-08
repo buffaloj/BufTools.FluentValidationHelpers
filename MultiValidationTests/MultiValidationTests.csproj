@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BufTools.Aggregation.FluentValidation\BufTools.Aggregation.FluentValidation.csproj" />
+    <ProjectReference Include="..\BufTools.FluentValidation.Aggregation\BufTools.FluentValidation.Aggregation.csproj" />
   </ItemGroup>
 
 </Project>

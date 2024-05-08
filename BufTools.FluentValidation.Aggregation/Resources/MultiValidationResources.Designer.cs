@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BufTools.Aggregation.FluentValidation.Resources {
+namespace BufTools.FluentValidation.Aggregation.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace BufTools.Aggregation.FluentValidation.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BufTools.Aggregation.FluentValidation.Resources.MultiValidationResources", typeof(MultiValidationResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BufTools.FluentValidation.Aggregation.Resources.MultiValidationResources", typeof(MultiValidationResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
