@@ -101,20 +101,16 @@ namespace BufTools.FluentValidation.TestByExample
             if (validator == null)
                 return Empty;
 
-            var classDoc = xmlDocs.GetDocumentation(validator.GetType());
-            if (classDoc == null)
-            {
-                return Error($"{validator.GetType().Name} does not have any XML documentation.");
-            }
-
             var mother = new ObjectMother(provider);
 
             var errors = new List<string>();
-            var instance = mother.Birth(typeToValidate, (t, err) => errors.Add($"{t.Name} - {err}"));
+            var instance = mother.Birth(typeToValidate, (t, err) => errors.Add(err));
             if (instance == null)
+            {
                 errors.Insert(0, $"{typeToValidate} could not be instantiated and hydrated. Please check that the validators dependencies are registerd in the service container.");
+            }
 
-            if (errors.Any())
+            if (errors.Any() || instance == null)
                 return errors;
 
             var context = GetObjectContext(instance);
@@ -123,6 +119,8 @@ namespace BufTools.FluentValidation.TestByExample
             if (!results.IsValid)
                 return results.Errors.Select(e => $"{typeToValidate} - {e.ErrorMessage}");
 
+            var hasFailValues = false;
+            object? newVal = null;
             foreach (var property in typeToValidate.GetProperties())
             {
                 //if (_ignoreAttributes.Intersect(property.GetCustomAttributes().Select(a => a.GetType())).Any())
@@ -134,44 +132,79 @@ namespace BufTools.FluentValidation.TestByExample
                     continue;
                 }
 
-                if (doc.FailValues.Any())
+                foreach (var fail in doc.FailValues)
                 {
-                    foreach (var fail in doc.FailValues)
+                    try
                     {
+                        hasFailValues = true;
                         var orgVal = property.GetValue(instance, null);
 
-                        var newVal = GetValue(fail, property.PropertyType);
+                        try
+                        {
+                            newVal = GetValue(fail, property.PropertyType);
+                        }
+                        catch (FormatException ex)
+                        {
+                            errors.Add($"'{fail}' is not a valid {property.PropertyType.Name} for {typeToValidate.Name}.{property.Name}");
+                            continue;
+                        }
+
                         property.SetValue(instance, newVal);
+
                         context = GetObjectContext(instance);
                         results = await validator.ValidateAsync(context);
                         if (results.IsValid)
-                            errors.Add($"{validator.GetType().Name} did not fail with '{fail}'");
+                            errors.Add($"{validator.GetType().Name} did not fail with {typeToValidate.Name}.{property.Name}='{fail}'");
 
                         property.SetValue(instance, orgVal);
                     }
+                    catch (Exception ex)
+                    {
+                        errors.Add($"An exception occurred while trying to get '{doc.Example}' for {typeToValidate.Name}.{property.Name}:\n{ex.Message}");
+                        continue;
+                    }
                 }
-                else
-                    errors.Add($"{typeToValidate.Name} does not have any fail values in the XML documentation.");
 
                 foreach (var pass in doc.PassValues)
                 {
-                    var orgVal = property.GetValue(instance, null);
+                    try
+                    {
+                        var orgVal = property.GetValue(instance, null);
 
-                    var newVal = GetValue(pass, property.PropertyType);
-                    property.SetValue(instance, newVal);
-                    context = GetObjectContext(instance);
-                    results = await validator.ValidateAsync(context);
-                    if (!results.IsValid)
-                        errors.Add($"{validator.GetType().Name} did not pass with '{pass}'");
+                        try
+                        {
+                            newVal = GetValue(pass, property.PropertyType);
+                        }
+                        catch (FormatException ex)
+                        {
+                            errors.Add($"'{pass}' is not a valid {property.PropertyType.Name} for {typeToValidate.Name}.{property.Name}");
+                            continue;
+                        }
 
-                    property.SetValue(instance, orgVal);
+                        property.SetValue(instance, newVal);
+
+                        context = GetObjectContext(instance);
+                        results = await validator.ValidateAsync(context);
+                        if (!results.IsValid)
+                            errors.Add($"{validator.GetType().Name} did not pass with {typeToValidate.Name}.{property.Name}='{pass}'");
+
+                        property.SetValue(instance, orgVal);
+                    }
+                    catch (Exception ex)
+                    {
+                        errors.Add($"An exception occurred while trying to get '{doc.Example}' for {typeToValidate.Name}.{property.Name}:\n{ex.Message}");
+                        continue;
+                    }
                 }
             }
+
+            if (!hasFailValues)
+                errors.Add($"{typeToValidate.Name} does not have any fail values in the XML documentation.");
 
             return errors;
         }
 
-        private object GetValue(string value, Type type)
+        private object? GetValue(string value, Type type)
         {
             if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IEnumerable<>))
             {
@@ -225,8 +258,8 @@ namespace BufTools.FluentValidation.TestByExample
                 return bool.Parse(value);
 
             if (type.IsEnum)
-                return Convert.ChangeType(value, Enum.GetUnderlyingType(type));
-            return null;// Birth(type);
+                return Enum.Parse(type, value);
+            return null;
         }
 
         private IValidationContext GetObjectContext(object objectToValidate)
@@ -283,7 +316,6 @@ namespace BufTools.FluentValidation.TestByExample
                     if (!result.IsValid)
                         errors.Add($"{validator.GetType().Name} did not pass with '{pass}' (Errors: {result.Errors})");
                 }
-
             }
             else
                 errors.Add($"{validator.GetType().Name} does not have any pass values in the class XML documentation.");
