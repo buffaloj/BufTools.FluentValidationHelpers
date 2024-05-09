@@ -70,7 +70,7 @@ namespace BufTools.FluentValidation.TestByExample
                 return Error($"{validatorType} could not be instantiated. Please check that the validators dependencies are registerd in the service container.");
 
             if (BasicTypes.Any(t => typeToValidate.IsAssignableTo(t)))
-                return await GetEnforcementErrors(validator, xmlDocs);
+                return await GetEnforcementErrors(validator, xmlDocs, typeToValidate);
 
             return await GetObjectErrors(validator, typeToValidate, provider, xmlDocs);
         }
@@ -278,7 +278,7 @@ namespace BufTools.FluentValidation.TestByExample
             return new ValidationContext<T>((T)objectToValidate);
         }
 
-        private async Task<IEnumerable<string>> GetEnforcementErrors(IValidator validator, IDictionary<string, MemberDoc> xmlDocs)
+        private async Task<IEnumerable<string>> GetEnforcementErrors(IValidator validator, IDictionary<string, MemberDoc> xmlDocs, Type typeToValidate)
         {
             if (validator == null)
                 return Empty;
@@ -294,7 +294,7 @@ namespace BufTools.FluentValidation.TestByExample
             {
                 foreach (var fail in classDoc.FailValues)
                 {
-                    if (!GetContext(fail, validator, ref errors, out var context))
+                    if (!GetContext(fail, validator, typeToValidate, ref errors, out var context))
                         continue;
 
                     var result = await validator.ValidateAsync(context);
@@ -309,7 +309,7 @@ namespace BufTools.FluentValidation.TestByExample
             {
                 foreach (var pass in classDoc.PassValues)
                 {
-                    if (!GetContext(pass, validator, ref errors, out var context))
+                    if (!GetContext(pass, validator, typeToValidate, ref errors, out var context))
                         continue;
 
                     var result = await validator.ValidateAsync(context);
@@ -322,12 +322,18 @@ namespace BufTools.FluentValidation.TestByExample
             return errors;
         }
 
-        private bool GetContext(string value, IValidator validator, ref List<string> errors, out IValidationContext context)
+        private bool GetContext(string value, IValidator validator, Type typeToValidate, ref List<string> errors, out IValidationContext context)
         {
             try
             {
                 context = GetContext(value, validator);
                 return true;
+            }
+            catch (FormatException ex)
+            {
+                errors.Add($"'{value}' is not a valid {typeToValidate.Name} for {validator.GetType().Name}");
+                context = null;
+                return false;
             }
             catch (Exception ex)
             {
