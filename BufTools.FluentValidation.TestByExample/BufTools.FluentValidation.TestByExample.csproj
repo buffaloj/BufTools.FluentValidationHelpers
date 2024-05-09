@@ -6,15 +6,15 @@
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Test FluentValidators By Example</Title>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Authors>Jeremy Shull</Authors>
     <Description>Allows testing validators using example values found in the XML</Description>
     <Copyright>Copyright (c) Jeremy Shull, 2024</Copyright>
     <PackageProjectUrl>https://github.com/buffaloj/BufTools.FluentValidationHelpers/tree/main/BufTools.FluentValidation.TestByExample</PackageProjectUrl>
     <PackageIcon>icon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <AssemblyVersion>1.0.1</AssemblyVersion>
-    <FileVersion>1.0.1</FileVersion>
+    <AssemblyVersion>1.0.2</AssemblyVersion>
+    <FileVersion>1.0.2</FileVersion>
     <PackageTags>FluentValidation Test Testing</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <DocumentationFile />
